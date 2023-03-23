@@ -1,0 +1,50 @@
+---
+title: "HW1-ZW"
+format: html
+editor: visual
+---
+```{r, message=FALSE}
+library(dplyr)
+library(ggplot2)
+library(psych)
+```
+
+My name is Zoe Walts (she/they). I am a second year PhD student in Epidemiology, housed in the Department of Population Health Sciences, and my research interests include the impact of systemic inequities on cancer outcomes. I am a cat mom (check my github profile picture for a family portrait!), a music lover, and I like playing old video games.
+
+```{r}
+mean_mpg = mean(mtcars$mpg)
+```
+
+The mean miles per gallon (mpg) for cars in the mtcars dataset is: `r mean_mpg`
+
+```{r}
+mtcars$gt30 = ifelse(mtcars$mpg > 30,1,0)
+
+greater_than_30 = sum(mtcars$gt30>0) 
+less_than_30 = sum(mtcars$gt30<1) 
+proportion_gt30 = greater_than_30/(greater_than_30+less_than_30)
+```
+Number of cars that get >30 mpg: `r greater_than_30`
+
+Out of the 32 automobiles included in the Motor Trend Car Road Tests dataset, a small proportion of `r proportion_gt30` got greater than 30 mpg.
+
+```{r}
+mpg = mtcars$mpg
+cyl = mtcars$cyl
+cormpgcyl = cor.test(mpg, cyl, alternative=c("two.sided"), method=c("pearson"), conf.level=0.95)
+
+```
+Pearson correlation between mpg and number of cylinders: `r cormpgcyl$estimate`
+
+
+```{r, message=FALSE}
+data(mtcars)
+ggplot(mtcars, aes(x = mpg, y = cyl))+
+      geom_point() + 
+      geom_smooth(method = "lm", se = FALSE)
+```
+
+As the mpg of the car increases, the number of cylinders, either 4, 6, or 8, tends to decrease, with the fitted line predicting about 13, 20, and 28 mpg, respectively, for each cylinder category.
+
+
+
