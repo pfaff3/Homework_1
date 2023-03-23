@@ -1,0 +1,67 @@
+---
+title: "HW1-BS"
+author: "Brooke Sasia"
+format: html
+editor: visual
+---
+
+# Homework 1: R Refresher
+
+```{r, message = FALSE}
+library(dplyr)
+library(ggplot2)
+library(psych)
+```
+
+I'm a third year grad student in the Clinical Psychology PhD program advised by Dr. James Li! My research interests include genetic and environmental factors underlying externalizing behaviors across development.
+
+### Mean miles per gallon
+```{r}
+mean_mpg <- mean(mtcars$mpg)
+```
+
+The mean miles per gallon for cars in the mtcars dataset is: `r mean_mpg`.
+
+### Number of cars with mpg >30
+```{r}
+filter(mtcars, mpg > 30) %>% 
+  count()
+
+describe(mtcars$mpg)
+```
+
+Of the 32 cars in the mtcars dataset, only 4 cars get gas mileage greater than 30 miles per hour.
+
+### Correlation between miles per gallon and number of cylinders
+```{r}
+mtcars %>% 
+  select(mpg, cyl) %>% 
+  corr.test()
+```
+
+### Graph of association between mpg and cylinders in mtcars
+```{r, message = F}
+ggplot(mtcars, aes(x = mpg, y = cyl))+
+      geom_point() + 
+      geom_smooth(method = "lm", se = FALSE) + 
+  xlab("Miles per gallon") + 
+  ylab("Number of cylinders") + 
+  ggtitle("Association between miles per gallon \n and cylinders in mtcars") + 
+  theme_bw(base_size = 20) + 
+  theme(axis.text.x = element_text(size = 14, face = "bold"), 
+        axis.text.y = element_text(size = 14, face = "bold"), 
+        axis.title = element_text(size = 18, face = "bold"), 
+        axis.line = element_line(color = "black"), 
+        axis.ticks = element_line(color = "black"), 
+        plot.title = element_text(hjust = 0.5, face = "bold"), 
+        panel.border = element_blank(), 
+        panel.grid.major.x = element_blank(), 
+        panel.grid.minor.x = element_blank(), 
+        panel.grid.minor.y = element_blank(), 
+        text = element_text(family = "Times New Roman")) + 
+  scale_x_continuous(breaks = round(seq(min(10), max(35), by = 5))) + 
+  scale_y_continuous(breaks = round(seq(min(2), max(10), by = 2)))
+```
+
+The above graph shows that there is a strong negative correlation between number of cylinders and miles per gallon (*r* = -0.85, *p* < .01) such that as the number of cylinders decreases, miles per gallon increases.
+
