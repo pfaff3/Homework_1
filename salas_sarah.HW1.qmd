@@ -1,0 +1,43 @@
+---
+title: "HW1-SS"
+format: html
+editor: visual
+---
+
+```{r, message=FALSE}
+library(dplyr)
+library(ggplot2)
+library(psych)
+```
+
+My name is Sarah Salas. I am from Texas and I have a 3-legged cat named Peach.
+
+```{r}
+mean_mpg <- mean(mtcars$mpg) # having the = instead of <- is fine here but might need the <- for it to be less ambiguous
+```
+
+The mean miles per gallon for cars in the mtcars dataset is: `r mean_mpg`
+
+```{r, message=FALSE}
+# write code that will count the number of cars in the dataset that get >30 miles per gallon and return that number below the chunk
+mtcars <- mtcars
+mpg_30 <- subset(mtcars, mpg > 30)
+nrow(mpg_30)
+```
+
+The proportion of cars in the mtcars dataset that get \>30 mpg is: `r nrow(mpg_30)/nrow(mtcars)`
+
+```{r}
+correlation <- cor(mtcars$mpg, mtcars$cyl, method = 'pearson')
+```
+
+The pearson correlation between miles per gallon and number of cylinders of the cars in the database is: `r correlation`
+
+```{r}
+data(mtcars)
+ggplot(mtcars, aes(x = cyl, y = mpg))+
+      geom_point() + 
+      geom_smooth(method = "lm", se = FALSE)
+```
+
+The graph shows that there is a negative relationship between cylinders and miles per gallon. The more cylinders the fewer miles per gallon we can expect.
